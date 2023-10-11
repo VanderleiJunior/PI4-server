@@ -1,0 +1,425 @@
+openapi: 3.0.0
+info:
+  title: Documentação da API de Dados da Horta
+  description: Documentação da API que fornece informações de temperatura e umidade.
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: pedroneveshespanhol@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licences/
+  version: 1.0.0
+externalDocs:
+  url: http://swagger.io
+  description: Additional Docs & Infos
+servers:
+  - url: https://fatecfranca.com.br/aula
+tags:
+  - name: infos
+    description: Operações com os dados recebidos do arduino
+  - name: users
+    description: Operações com os dados dos usuários
+paths:
+  /infos:
+    post:
+      tags:
+        - infos
+      summary: Adicionar nova informação da horta
+      requestBody:
+        description: Informações da horta a serem adicionadas
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/infosRequest'
+      responses:
+        '201':
+          description: Informações da horta adicionadas com sucesso
+        '500':
+          description: Error 500 - Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 500
+                  mensagem:
+                    type: string
+                    example: The server encountered an internal error while processing the request.
+    get:
+      tags:
+        - infos
+      summary: Obter informações da horta
+      parameters:
+        - in: query
+          name: inicialDate
+          schema:
+            type: string
+            format: date-time
+          description: Inicial date for filter
+        - in: query
+          name: finalDate
+          schema:
+            type: string
+            format: date-time
+          description: Final date for filter
+      responses:
+        '200':
+          description: Lista de informações da horta
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/infosResponse'
+        '500':
+          description: Error 500 - Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 500
+                  mensagem:
+                    type: string
+                    example: The server encountered an internal error while processing the request.               
+        '400':
+          description: Error 404 - Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 404
+                  mensagem:
+                    type: string
+                    example: There aren't infos between this data filters.
+    put:
+      tags:
+        - infos
+      summary: Atualizar informações da horta
+      parameters:
+        - in: path
+          name: uuid
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: UUID da leitura das infos a serem atualizadas
+      requestBody:
+        description: Informações das infos a serem atualizadas
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/infosRequest'
+      responses:
+        '200':
+          description: Informações das infos atualizadas com sucesso
+        '404':
+          description: Error 404 - Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 404
+                  mensagem:
+                    type: string
+                    example: Informações das infos não encontradas
+        '500':
+          description: Error 500 - Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 500
+                  mensagem:
+                    type: string
+                    example: The server encountered an internal error while processing the request.
+    delete:
+      tags:
+        - infos
+      summary: Excluir informações existentes
+      parameters:
+        - in: path
+          name: uuid
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: UUID da leitura das infos a serem excluídas
+      responses:
+        '204':
+          description: Informações excluídas com sucesso
+        '404':
+          description: Error 404 - Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 404
+                  mensagem:
+                    type: string
+                    example: Informações não encontradas
+  /users:
+    get:
+      tags:
+        - users
+      summary: Obter lista de usuários
+      responses:
+        '200':
+          description: Lista de usuários
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/usersResponse'
+        '500':
+          description: Error 500 - Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 500
+                  mensagem:
+                    type: string
+                    example: The server encountered an internal error while processing the request.
+    post:
+      tags:
+        - users
+      summary: Adicionar novo usuário
+      requestBody:
+        description: Informações do usuário a serem adicionadas
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/usersRequest'
+      responses:
+        '201':
+          description: Usuário adicionado com sucesso
+        '500':
+          description: Error 500 - Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 500
+                  mensagem:
+                    type: string
+                    example: The server encountered an internal error while processing the request.
+  /users/{userId}:
+    get:
+      tags:
+        - users
+      summary: Obter usuário pelo ID
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID do usuário a ser obtido
+      responses:
+        '200':
+          description: Usuário obtido com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/usersResponse'
+        '404':
+          description: Error 404 - Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 404
+                  mensagem:
+                    type: string
+                    example: Usuário não encontrado
+    put:
+      tags:
+        - users
+      summary: Atualizar informações do usuário existente
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: ID do usuário a ser atualizado
+      requestBody:
+        description: Informações do usuário a serem atualizadas
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/usersRequest'
+      responses:
+        '200':
+          description: Informações do usuário atualizadas com sucesso
+        '404':
+          description: Error 404 - Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 404
+                  mensagem:
+                    type: string
+                    example: Usuário não encontrado
+        '500':
+          description: Error 500 - Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 500
+                  mensagem:
+                    type: string
+                    example: The server encountered an internal error while processing the request.
+    delete:
+      tags:
+        - users
+      summary: Excluir usuário existente
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: ID do usuário a ser excluído
+      responses:
+        '204':
+          description: Usuário excluído com sucesso
+        '404':
+          description: Error 404 - Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 404
+                  mensagem:
+                    type: string
+                    example: Usuário não encontrado
+components:
+  schemas:
+    infosResponse:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          description: UUID da leitura de dados
+        date-time:
+          type: string
+          format: date-time
+          description: Data e hora da leitura
+        temperature:
+          type: number
+          format: float
+          example: 30.4
+          description: Valor da temperatura em graus Celsius
+        soilMoisture:
+          type: number
+          format: float
+          example: 50.0
+          description: Valor da umidade do solo em %
+        airMoisture:
+          type: number
+          format: float
+          example: 10.5
+          description: Valor da umidade do ar em %
+    infosRequest:
+      type: object
+      properties:
+        temperature:
+          type: number
+          format: float
+          example: 30.4
+          description: Valor da temperatura em graus Celsius a ser adicionado/atualizado
+        soilMoisture:
+          type: number
+          format: float
+          example: 50.0
+          description: Valor da umidade do solo em % a ser adicionado/atualizado
+        airMoisture:
+          type: number
+          format: float
+          example: 10.5
+          description: Valor da umidade do ar em % a ser adicionado/atualizado
+    usersResponse:
+      type: object
+      properties:
+        userId:
+          type: string
+          format: uuid
+          description: ID do usuário
+        username:
+          type: string
+          description: Nome de usuário
+        email:
+          type: string
+          format: email
+          description: Endereço de e-mail do usuário
+        password:
+          type: string
+          description: Senha do usuário
+    usersRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Nome de usuário a ser adicionado/atualizado
+        email:
+          type: string
+          format: email
+          description: Endereço de e-mail do usuário a ser adicionado/atualizado
+        password:
+          type: string
+          description: Senha do usuário a ser adicionada/atualizada  
