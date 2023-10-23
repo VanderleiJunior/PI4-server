@@ -1,18 +1,11 @@
-import infos from "./infos-schema";
+import { Router } from "express";
 import infosController from "./infos-controller.js";
 
-const plugin = {
-    name: 'infos-v1-routes',
-    version: '1',
-    register: (server) => {
-        server.route([
-            {
-                method: "GET",
-                path: "/infos",
-                handler: infosController.getInfos
-            },
-        ])
-    }
-};
+const infosRouter = Router();
 
-export default plugin;
+infosRouter.route("/infos").get((req, res) => infosController.get(req, res));
+infosRouter.route("/infos").post((req, res) => infosController.post(req, res));
+infosRouter.route("/infos/:id").delete((req, res) => infosController.delete(req, res));
+
+
+export default infosRouter;

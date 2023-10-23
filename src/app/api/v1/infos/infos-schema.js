@@ -1,7 +1,6 @@
-import mongoose from "mongoose";
-import Schema from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-const infosSchema = new Schema(
+export const infosSchema = new Schema(
   {
     temperature: {
       type: Number,
@@ -19,6 +18,4 @@ const infosSchema = new Schema(
   { timestamps: true }
 );
 
-const infos = mongoose.model("infos", infosSchema);
-
-export default {infosSchema, infos};
+export const InfosSchema = mongoose.model("Infos", infosSchema);

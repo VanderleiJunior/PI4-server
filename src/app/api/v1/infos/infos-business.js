@@ -1,8 +1,19 @@
 import infosRepository from "./infos-repository.js";
 
-const find = async (infos) => {
+const infosBusiness = {
+  find: async (infos) => {
+    return await infosRepository.find(infos);
+  },
+  create: async (infos) => {
 
-  return infosRepository.find(infos);
-}
+    const res = await infosRepository.create(infos);
+    return res;
+  },
+  delete: async (id) => {
 
-export default find;
+    return await infosRepository.delete(id);
+    
+  },
+};
+
+export default infosBusiness;
