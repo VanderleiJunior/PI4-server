@@ -1,7 +1,7 @@
-const infosRepository = {
-    find: async (infos) => {
-      return infos;
-    },
-  };
+const infos = [];
+
+const find = async (filter) => {
+  return infos;
+}
   
-  export default infosRepository;
+module.exports = {find};
