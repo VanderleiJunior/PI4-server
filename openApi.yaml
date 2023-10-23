@@ -13,7 +13,7 @@ externalDocs:
   url: http://swagger.io
   description: Additional Docs & Infos
 servers:
-  - url: https://fatecfranca.com.br/aula
+  - url: http://localhost:3333/api/v1
 tags:
   - name: infos
     description: Operações com os dados recebidos do arduino
