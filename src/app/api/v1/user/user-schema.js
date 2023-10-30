@@ -14,6 +14,35 @@ export const userSchema = new Schema(
     password: {
       type: String,
       required: true,
+      select: false,
+    },
+    birthDate: {
+      type: String,
+      unique: true,
+    },
+
+    address: {
+      street: {
+        type: String,
+      },
+      number: {
+        type: String,
+      },
+      complement: {
+        type: String,
+      },
+      neighborhood: {
+        type: String,
+      },
+      city: {
+        type: String,
+      },
+      state: {
+        type: String,
+      },
+      cep: {
+        type: String,
+      },
     },
   },
   { timestamps: true }
