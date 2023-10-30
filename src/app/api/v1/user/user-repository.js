@@ -1,12 +1,21 @@
 import { UserSchema } from "./user-schema.js";
 
 const userRepository = {
-  find: async (user) => {
+  get: async (userId) => {
     try {
-      const res = { data: await UserSchema.find(user) };
-      return res;
+      const res = await UserSchema.find({ _id: userId });
+      return { data: res };
     } catch (err) {
-      return err;
+      return { data: err.menssage, status: 400 };
+    }
+  },
+  find: async (email) => {
+    try {
+      const res = await UserSchema.findOne({ email: email }).select("password");
+      return { data: res };
+    } catch (err) {
+      console.log(err);
+      return { data: "email invalid", status: 404 };
     }
   },
   create: async (user) => {
@@ -19,6 +28,15 @@ const userRepository = {
       } else {
         return { data: err.message, status: 400 };
       }
+    }
+  },
+  update: async (user) => {
+    try {
+      const result = await UserSchema.findByIdAndUpdate(user._id, { ...user });
+      return { data: result };
+    } catch (err) {
+      console.log(err);
+      return { data: "Id invalid.", status: 409 };
     }
   },
 };

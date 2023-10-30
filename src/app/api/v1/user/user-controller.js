@@ -2,7 +2,7 @@ import userBusiness from "./user-business.js";
 
 const userController = {
   get: async (req, res) => {
-    const userId = req.params.userId;
+    const userId = req.userId;
     const result = await userBusiness.find(userId);
     return res.json(result).status(200);
   },
@@ -19,6 +19,30 @@ const userController = {
 
     const result = await userBusiness.create(user);
     return res.status(result.status || 201).send(result.data);
+  },
+  auth: async (req, res) => {
+    const user = {
+      email: req.body.email,
+      password: req.body.password,
+    };
+
+    if (!user.email) {
+      return res.status(400).send("Email is required");
+    } else if (!user.password) {
+      return res.status(400).send("Password is required");
+    }
+
+    const result = await userBusiness.login(user);
+    return res.status(result.status || 200).send(result.data);
+  },
+  put: async (req, res) => {
+    if (!req.body.user) {
+      return res.status(400).send("req empty");
+    }
+    const user = { ...req.body.user, _id: req.userId };
+
+    const result = await userBusiness.put(user);
+    return res.status(result.status || 200).send(result.data);
   },
 };
 
