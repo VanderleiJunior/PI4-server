@@ -31,11 +31,11 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/infosRequest'
+              $ref: "#/components/schemas/infosRequest"
       responses:
-        '201':
+        "201":
           description: Informações da horta adicionadas com sucesso
-        '500':
+        "500":
           description: Error 500 - Internal server error
           content:
             application/json:
@@ -53,6 +53,8 @@ paths:
       tags:
         - infos
       summary: Obter informações da horta
+      security:
+        - BearerAuth: []
       parameters:
         - in: query
           name: inicialDate
@@ -67,14 +69,14 @@ paths:
             format: date-time
           description: Final date for filter
       responses:
-        '200':
+        "200":
           description: Lista de informações da horta
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/infosResponse'
-        '500':
-          description: Error 500 - Internal server error
+                $ref: "#/components/schemas/infosResponse"
+        "401":
+          description: Error 401 - Unauthorized
           content:
             application/json:
               schema:
@@ -83,61 +85,11 @@ paths:
                   code:
                     type: number
                     format: int32
-                    example: 500
+                    example: 401
                   mensagem:
                     type: string
-                    example: The server encountered an internal error while processing the request.               
-        '400':
-          description: Error 404 - Not Found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: number
-                    format: int32
-                    example: 404
-                  mensagem:
-                    type: string
-                    example: There aren't infos between this data filters.
-    put:
-      tags:
-        - infos
-      summary: Atualizar informações da horta
-      parameters:
-        - in: path
-          name: uuid
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: UUID da leitura das infos a serem atualizadas
-      requestBody:
-        description: Informações das infos a serem atualizadas
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/infosRequest'
-      responses:
-        '200':
-          description: Informações das infos atualizadas com sucesso
-        '404':
-          description: Error 404 - Not Found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: number
-                    format: int32
-                    example: 404
-                  mensagem:
-                    type: string
-                    example: Informações das infos não encontradas
-        '500':
+                    example: No token provided
+        "500":
           description: Error 500 - Internal server error
           content:
             application/json:
@@ -151,22 +103,52 @@ paths:
                   mensagem:
                     type: string
                     example: The server encountered an internal error while processing the request.
+        "400":
+          description: Error 404 - Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 404
+                  mensagem:
+                    type: string
+                    example: There aren't infos between this data filters.
     delete:
       tags:
         - infos
       summary: Excluir informações existentes
+      security:
+        - BearerAuth: []
       parameters:
         - in: path
-          name: uuid
+          name: id
           schema:
             type: string
-            format: uuid
+            format: id
           required: true
-          description: UUID da leitura das infos a serem excluídas
+          description: ID da leitura das infos a serem excluídas
       responses:
-        '204':
+        "204":
           description: Informações excluídas com sucesso
-        '404':
+        "401":
+          description: Error 401 - Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 401
+                  mensagem:
+                    type: string
+                    example: No token provided
+        "404":
           description: Error 404 - Not Found
           content:
             application/json:
@@ -180,19 +162,124 @@ paths:
                   mensagem:
                     type: string
                     example: Informações não encontradas
+  /infos/statistics:
+    get:
+      tags:
+        - infos
+      summary: Obter informações da horta
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Lista de informações da horta
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  temperature:
+                    type: object
+                    example:
+                      {
+                        "mean": 47,
+                        "mode": [50],
+                        "median": 36.5,
+                        "standardDeviation": 44.873154558154255,
+                        "skewness": 0.9678542073070054,
+                        "kurtosis": -0.7358239892450049,
+                      }
+                  soilMoisture:
+                    type: object
+                    example:
+                      {
+                        "mean": 47,
+                        "mode": [50],
+                        "median": 36.5,
+                        "standardDeviation": 44.873154558154255,
+                        "skewness": 0.9678542073070054,
+                        "kurtosis": -0.7358239892450049,
+                      }
+                  airMoisture:
+                    type: object
+                    example:
+                      {
+                        "mean": 47,
+                        "mode": [50],
+                        "median": 36.5,
+                        "standardDeviation": 44.873154558154255,
+                        "skewness": 0.9678542073070054,
+                        "kurtosis": -0.7358239892450049,
+                      }
+        "401":
+          description: Error 401 - Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 401
+                  mensagem:
+                    type: string
+                    example: No token provided
+        "500":
+          description: Error 500 - Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 500
+                  mensagem:
+                    type: string
+                    example: The server encountered an internal error while processing the request.
+        "400":
+          description: Error 404 - Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 404
+                  mensagem:
+                    type: string
   /users:
     get:
       tags:
         - users
+      security:
+        - BearerAuth: []
       summary: Obter lista de usuários
       responses:
-        '200':
+        "200":
           description: Lista de usuários
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/usersResponse'
-        '500':
+                $ref: "#/components/schemas/usersResponse"
+        "401":
+          description: Error 401 - Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 401
+                  mensagem:
+                    type: string
+                    example: No token provided
+        "500":
           description: Error 500 - Internal server error
           content:
             application/json:
@@ -216,11 +303,11 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/usersRequest'
+              $ref: "#/components/schemas/usersRequest"
       responses:
-        '201':
+        "201":
           description: Usuário adicionado com sucesso
-        '500':
+        "500":
           description: Error 500 - Internal server error
           content:
             application/json:
@@ -234,63 +321,37 @@ paths:
                   mensagem:
                     type: string
                     example: The server encountered an internal error while processing the request.
-  /users/{userId}:
-    get:
-      tags:
-        - users
-      summary: Obter usuário pelo ID
-      parameters:
-        - in: path
-          name: userId
-          required: true
-          schema:
-            type: string
-            format: uuid
-          description: ID do usuário a ser obtido
-      responses:
-        '200':
-          description: Usuário obtido com sucesso
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/usersResponse'
-        '404':
-          description: Error 404 - Not Found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: number
-                    format: int32
-                    example: 404
-                  mensagem:
-                    type: string
-                    example: Usuário não encontrado
     put:
       tags:
         - users
       summary: Atualizar informações do usuário existente
-      parameters:
-        - in: path
-          name: userId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: ID do usuário a ser atualizado
+      security:
+        - BearerAuth: []
       requestBody:
         description: Informações do usuário a serem atualizadas
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/usersRequest'
+              $ref: "#/components/schemas/usersRequest"
       responses:
-        '200':
+        "200":
           description: Informações do usuário atualizadas com sucesso
-        '404':
+        "401":
+          description: Error 401 - Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 401
+                  mensagem:
+                    type: string
+                    example: No token provided
+        "404":
           description: Error 404 - Not Found
           content:
             application/json:
@@ -304,7 +365,7 @@ paths:
                   mensagem:
                     type: string
                     example: Usuário não encontrado
-        '500':
+        "500":
           description: Error 500 - Internal server error
           content:
             application/json:
@@ -318,23 +379,39 @@ paths:
                   mensagem:
                     type: string
                     example: The server encountered an internal error while processing the request.
-    delete:
+  /users/auth:
+    post:
       tags:
         - users
-      summary: Excluir usuário existente
-      parameters:
-        - in: path
-          name: userId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: ID do usuário a ser excluído
+      summary: Login User
+      requestBody:
+        description: email and password
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: Endereço de e-mail do usuário a ser adicionado/atualizado
+                password:
+                  type: string
+                  description: Senha do usuário a ser adicionada/atualizada
       responses:
-        '204':
-          description: Usuário excluído com sucesso
-        '404':
-          description: Error 404 - Not Found
+        "200":
+          description: Login realizado com sucesso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: token
+        "500":
+          description: Error 500 - Internal server error
           content:
             application/json:
               schema:
@@ -343,10 +420,11 @@ paths:
                   code:
                     type: number
                     format: int32
-                    example: 404
+                    example: 500
                   mensagem:
                     type: string
-                    example: Usuário não encontrado
+                    example: The server encountered an internal error while processing the request.
+
 components:
   schemas:
     infosResponse:
@@ -422,4 +500,9 @@ components:
           description: Endereço de e-mail do usuário a ser adicionado/atualizado
         password:
           type: string
-          description: Senha do usuário a ser adicionada/atualizada  
+          description: Senha do usuário a ser adicionada/atualizada
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

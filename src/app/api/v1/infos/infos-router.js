@@ -1,11 +1,23 @@
 import { Router } from "express";
 import infosController from "./infos-controller.js";
+import auth from "../../../config/middleware/auth/auth.js";
 
-const infosRouter = Router();
+export const infosRouter = Router();
 
-infosRouter.route("/infos").get((req, res) => infosController.get(req, res));
 infosRouter.route("/infos").post((req, res) => infosController.post(req, res));
-infosRouter.route("/infos/:id").delete((req, res) => infosController.delete(req, res));
 
+export const infosRouterAuth = Router();
 
-export default infosRouter;
+infosRouterAuth.use(auth);
+
+infosRouterAuth
+  .route("/infos")
+  .get((req, res) => infosController.get(req, res));
+
+infosRouterAuth
+  .route("/infos/statistics")
+  .get((req, res) => infosController.statistics(req, res));
+
+infosRouterAuth
+  .route("/infos/:id")
+  .delete((req, res) => infosController.delete(req, res));

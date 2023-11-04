@@ -1,3 +1,4 @@
+import calculateStatistics from "../../../statistic/index.js";
 import infosBusiness from "./infos-business.js";
 
 const infosController = {
@@ -14,7 +15,9 @@ const infosController = {
     };
 
     if (!infos.temperature | !infos.soilMoisture | !infos.airMoisture) {
-      return res.status(400).send("Soil moisture, temperature and air moisture is required");
+      return res
+        .status(400)
+        .send("Soil moisture, temperature and air moisture is required");
     }
 
     const result = await infosBusiness.create(infos);
@@ -36,7 +39,27 @@ const infosController = {
     } else {
       return res.status(500).send(result.data);
     }
-  }
+  },
+  statistics: async (req, res) => {
+    const result = await infosBusiness.find();
+    const temperature = [];
+    const soilMoisture = [];
+    const airMoisture = [];
+
+    result.data.map((data) => {
+      temperature.push(data.temperature);
+      soilMoisture.push(data.soilMoisture);
+      airMoisture.push(data.airMoisture);
+    });
+
+    const data = {
+      temperature: calculateStatistics(temperature),
+      soilMoisture: calculateStatistics(soilMoisture),
+      airMoisture: calculateStatistics(airMoisture),
+    };
+
+    return res.status(200).send(data);
+  },
 };
 
 export default infosController;
