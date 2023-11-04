@@ -11,7 +11,7 @@ const appMiddleware = (app) => {
   app.use(cors());
   app.use(express.json());
   app.use(router);
-  app.use("/api/v1/api-docs", swaggerUi.serve, swaggerDocs);
+  // app.use("/api/v1/api-docs", swaggerUi.serve, swaggerDocs);
 };
 
 export default appMiddleware;
