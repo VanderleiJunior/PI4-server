@@ -4,14 +4,8 @@ import {
   infosRouter,
   infosRouterAuth,
 } from "../../api/v1/infos/infos-router.js";
-import swaggerJSON from "./swagger.json" assert { type: "json" };
-import swaggerUi from "swagger-ui-express";
-
-const swaggerDocs = swaggerUi.setup(swaggerJSON);
 
 const router = Router();
-
-router.use("/api/v1/api-docs", swaggerUi.serve, swaggerDocs);
 
 router.use("/api/v1", userRouter);
 
