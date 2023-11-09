@@ -1,5 +1,4 @@
-import infosController from "../infos/infos-controller";
-import statisticsBusiness from "./statistics-business";
+import statisticsBusiness from "./statistics-business.js";
 
 const statisticsController = {
   get: async (req, res) => {
@@ -64,3 +63,5 @@ const statisticsController = {
     return res.json(data).status(201);
   },
 };
+
+export default statisticsController;
