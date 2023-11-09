@@ -1,4 +1,3 @@
-import calculateStatistics from "../../../statistic/index.js";
 import infosBusiness from "./infos-business.js";
 
 const infosController = {
