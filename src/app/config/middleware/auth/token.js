@@ -8,13 +8,17 @@ const token = {
     const token = jwt.sign({ id: id }, secret, { expiresIn: tokenTime });
     return token;
   },
-  validToken: async (token) => {
-    const decodedToken = jwt.verify(
-      token.replace(/^['"]|['"]$/g, ""),
-      secret || ""
-    );
-    const id = decodedToken.id;
-    return id;
+  validToken: (token) => {
+    try {
+      const decodedToken = jwt.verify(
+        token.replace(/^['"]|['"]$/g, ""),
+        secret || ""
+      );
+      const id = decodedToken.id;
+      return id;
+    } catch (err) {
+      console.error("Token invalid or expired");
+    }
   },
 };
 
