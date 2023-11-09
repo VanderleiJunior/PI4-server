@@ -1,11 +1,14 @@
 import { InfosSchema } from "./infos-schema.js";
 
 const infosRepository = {
-  find: async (infos) => {
+  find: async (size) => {
     try {
-      const res = { data: await InfosSchema.find(infos) };
+      const res = {
+        data: await InfosSchema.find().sort({ createdAt: -1 }).limit(size),
+      };
       return res;
     } catch (err) {
+      console.error(err);
       return err;
     }
   },
@@ -14,6 +17,7 @@ const infosRepository = {
       const result = await InfosSchema.create(infos);
       return { data: result };
     } catch (err) {
+      console.error(err);
       if (err.code === 11000) {
         return { data: "Email already exists.", status: 409 };
       } else {
@@ -30,6 +34,7 @@ const infosRepository = {
         return { data: "Info not found.", status: 404 };
       }
     } catch (err) {
+      console.error(err);
       return { data: err.message, status: 500 };
     }
   },
