@@ -11,6 +11,11 @@ const infosBusiness = {
   delete: async (id) => {
     return await infosRepository.delete(id);
   },
+  // populate: async (month) => {
+  //   const data = await infosRepository.create(statistic);
+
+  //   return data;
+  // },
 };
 
 export default infosBusiness;

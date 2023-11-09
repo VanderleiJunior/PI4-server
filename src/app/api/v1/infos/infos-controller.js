@@ -40,6 +40,16 @@ const infosController = {
       return res.status(500).send(result.data);
     }
   },
+  // populate: async (req, res) => {
+  //   const month = req.params.month;
+  //   const result = await statisticsBusiness.populate(month);
+
+  //   if (result.status) {
+  //     return res.send(result.data).status(result.status);
+  //   }
+
+  //   return res.json(data).status(201);
+  // },
 };
 
 export default infosController;
