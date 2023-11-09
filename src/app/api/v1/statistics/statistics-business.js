@@ -1,4 +1,4 @@
-import statisticsRepository from "./statistics-repository";
+import statisticsRepository from "./statistics-repository.js";
 
 const statisticsBusiness = {
   find: async (type) => {

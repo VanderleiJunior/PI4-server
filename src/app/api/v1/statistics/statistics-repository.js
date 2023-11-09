@@ -1,4 +1,4 @@
-import { StatisticsSchema } from "./statistics-schema";
+import { StatisticsSchema } from "./statistics-schema.js";
 
 const statisticsRepository = {
   find: async (size) => {
