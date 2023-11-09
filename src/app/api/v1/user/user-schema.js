@@ -18,7 +18,6 @@ export const userSchema = new Schema(
     },
     birthDate: {
       type: String,
-      unique: true,
     },
 
     address: {
