@@ -17,7 +17,8 @@ const token = {
       const id = decodedToken.id;
       return id;
     } catch (err) {
-      return console.error("Token invalid or expired");
+      console.error("Token invalid or expired");
+      return res.status(401).send({ error: "Token invalid or expired" });
     }
   },
 };
