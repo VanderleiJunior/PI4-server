@@ -40,26 +40,6 @@ const infosController = {
       return res.status(500).send(result.data);
     }
   },
-  statistics: async (req, res) => {
-    const result = await infosBusiness.find();
-    const temperature = [];
-    const soilMoisture = [];
-    const airMoisture = [];
-
-    result.data.map((data) => {
-      temperature.push(data.temperature);
-      soilMoisture.push(data.soilMoisture);
-      airMoisture.push(data.airMoisture);
-    });
-
-    const data = {
-      temperature: calculateStatistics(temperature),
-      soilMoisture: calculateStatistics(soilMoisture),
-      airMoisture: calculateStatistics(airMoisture),
-    };
-
-    return res.status(200).send(data);
-  },
 };
 
 export default infosController;
