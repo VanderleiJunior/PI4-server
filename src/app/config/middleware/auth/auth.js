@@ -19,13 +19,18 @@ const auth = async (req, res, next) => {
     return res.status(401).send({ error: "Token no formatted" });
   }
 
-  const id = await token.validToken(codToken, res);
-  if (!id) {
-    console.error("Token invalid or expired");
+  try {
+    const id = await token.validToken(codToken, res);
+    if (!id) {
+      console.error("Token invalid or expired");
+      return res.status(401).send({ error: "Token invalid or expired" });
+    }
+
+    req.userId = id;
+    return next();
+  } catch (err) {
     return res.status(401).send({ error: "Token invalid or expired" });
   }
-  req.userId = id;
-  return next();
 };
 
 export default auth;
