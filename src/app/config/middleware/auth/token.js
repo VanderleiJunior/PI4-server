@@ -8,7 +8,7 @@ const token = {
     const token = jwt.sign({ id: id }, secret, { expiresIn: tokenTime });
     return token;
   },
-  validToken: (token) => {
+  validToken: (token, res) => {
     try {
       const decodedToken = jwt.verify(
         token.replace(/^['"]|['"]$/g, ""),
