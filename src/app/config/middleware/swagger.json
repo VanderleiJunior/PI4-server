@@ -245,9 +245,9 @@
         }
       }
     },
-    "/users": {
+    "/user": {
       "get": {
-        "tags": ["users"],
+        "tags": ["user"],
         "security": [
           {
             "BearerAuth": []
@@ -310,7 +310,7 @@
         }
       },
       "post": {
-        "tags": ["users"],
+        "tags": ["user"],
         "summary": "Adicionar novo usuário",
         "requestBody": {
           "description": "Informações do usuário a serem adicionadas",
@@ -364,7 +364,7 @@
         }
       },
       "put": {
-        "tags": ["users"],
+        "tags": ["user"],
         "summary": "Atualizar informações do usuário existente",
         "security": [
           {
@@ -452,9 +452,9 @@
         }
       }
     },
-    "/users/auth": {
+    "/user/auth": {
       "post": {
-        "tags": ["users"],
+        "tags": ["user"],
         "summary": "Login User",
         "requestBody": {
           "description": "email and password",
