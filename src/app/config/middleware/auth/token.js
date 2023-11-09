@@ -5,7 +5,7 @@ const tokenTime = process.env.TOKEN_TIME;
 
 const token = {
   newToken: (id) => {
-    const token = jwt.sign({ id: id }, secret, { expiresIn: tokenTime });
+    const token = jwt.sign({ id: id }, secret);
     return token;
   },
   validToken: (token, res) => {
