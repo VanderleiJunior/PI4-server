@@ -63,7 +63,7 @@ export const statisticsSchema = new Schema(
       },
     },
     date: {
-      type: Number,
+      type: String,
       required: true,
       unique: true,
     },

@@ -19,7 +19,7 @@ const statisticsController = {
       return res.send(result.data).status(result.status);
     }
 
-    return res.json(data).status(200);
+    return res.json(result).status(200);
   },
   post: async (req, res) => {
     const statistic = {
