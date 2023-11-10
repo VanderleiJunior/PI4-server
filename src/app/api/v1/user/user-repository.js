@@ -14,6 +14,10 @@ const userRepository = {
   find: async (email) => {
     try {
       const res = await UserSchema.findOne(email).select("password");
+      if (res == null) {
+        return { data: "email invalid", status: 404 };
+      }
+      console.log(res);
       return { data: res };
     } catch (err) {
       console.error(err);
