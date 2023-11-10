@@ -9,17 +9,12 @@ const token = {
     return token;
   },
   validToken: (token, res) => {
-    try {
-      const decodedToken = jwt.verify(
-        token.replace(/^['"]|['"]$/g, ""),
-        secret || ""
-      );
-      const id = decodedToken.id;
-      return id;
-    } catch (err) {
-      console.error("Token invalid or expired");
-      return res.status(401).send({ error: "Token invalid or expired" });
-    }
+    const decodedToken = jwt.verify(
+      token.replace(/^['"]|['"]$/g, ""),
+      secret || ""
+    );
+    const id = decodedToken.id;
+    return id || false;
   },
 };
 

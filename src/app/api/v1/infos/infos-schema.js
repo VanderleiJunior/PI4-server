@@ -8,7 +8,6 @@ export const infosSchema = new Schema(
     },
     soilMoisture: {
       type: Number,
-      required: true,
     },
     airMoisture: {
       type: Number,

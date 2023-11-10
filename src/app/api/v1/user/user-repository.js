@@ -7,12 +7,13 @@ const userRepository = {
       return { data: res };
     } catch (err) {
       console.error(err);
+
       return { data: err.menssage, status: 400 };
     }
   },
   find: async (email) => {
     try {
-      const res = await UserSchema.findOne({ email: email }).select("password");
+      const res = await UserSchema.findOne(email).select("password");
       return { data: res };
     } catch (err) {
       console.error(err);

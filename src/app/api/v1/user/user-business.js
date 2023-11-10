@@ -32,10 +32,12 @@ const userBusiness = {
     }
   },
   login: async (user) => {
-    const dbUser = await userRepository.find(user.email);
+    const dbUser = await userRepository.find({ email: user.email });
 
     if (dbUser.status) {
       return dbUser;
+    } else if (!dbUser.data.password) {
+      return { data: "Password invalid", status: 400 };
     }
 
     if (!crypt.passwordCompare(user.password, dbUser.data.password)) {
