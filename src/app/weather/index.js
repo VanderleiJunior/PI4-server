@@ -6,6 +6,7 @@ const setWeather = async () => {
   const weather = {
     temperature: data.main.temp,
     airMoisture: data.main.humidity,
+    systemOrigin: "WEATHER_API",
   };
 
   const res = await infosRepository.create(weather);

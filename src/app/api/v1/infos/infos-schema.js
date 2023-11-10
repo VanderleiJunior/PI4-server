@@ -13,6 +13,9 @@ export const infosSchema = new Schema(
       type: Number,
       required: true,
     },
+    systemOrigin: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

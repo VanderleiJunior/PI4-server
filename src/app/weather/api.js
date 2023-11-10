@@ -12,7 +12,7 @@ export const getWeather = async () => {
   await axios
     .get(apiURL)
     .then((data) => {
-      console.log(data);
+      return data;
     })
     .catch((e) => console.log(e));
 };
