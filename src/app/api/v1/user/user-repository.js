@@ -17,7 +17,6 @@ const userRepository = {
       if (res == null) {
         return { data: "email invalid", status: 404 };
       }
-      console.log(res);
       return { data: res };
     } catch (err) {
       console.error(err);

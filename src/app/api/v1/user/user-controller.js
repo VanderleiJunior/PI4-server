@@ -9,7 +9,7 @@ const userController = {
   post: async (req, res) => {
     const user = {
       name: req.body.name,
-      email: req.body.email.toLowerCase(),
+      email: req.body.email.toLowerCase() || null,
       password: req.body.password,
     };
 
@@ -22,7 +22,7 @@ const userController = {
   },
   auth: async (req, res) => {
     const user = {
-      email: req.body.email.toLowerCase(),
+      email: req.body.email.toLowerCase() || null,
       password: req.body.password,
     };
 

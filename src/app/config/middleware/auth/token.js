@@ -9,12 +9,16 @@ const token = {
     return token;
   },
   validToken: (token, res) => {
-    const decodedToken = jwt.verify(
-      token.replace(/^['"]|['"]$/g, ""),
-      secret || ""
-    );
-    const id = decodedToken.id;
-    return id || false;
+    try {
+      const decodedToken = jwt.verify(
+        token.replace(/^['"]|['"]$/g, ""),
+        secret || ""
+      );
+      const id = decodedToken.id;
+      return id || false;
+    } catch {
+      return false;
+    }
   },
 };
 
