@@ -25,8 +25,12 @@
       "description": "Operações com os dados recebidos do arduino"
     },
     {
-      "name": "users",
+      "name": "user",
       "description": "Operações com os dados dos usuários"
+    },
+    {
+      "name": "statistic",
+      "description": "Operações com os dados de estatistica"
     }
   ],
   "paths": {
@@ -518,6 +522,82 @@
           }
         }
       }
+    },
+    "/statistic": {
+      "get": {
+        "tags": ["statistic"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "type",
+            "schema": {
+              "type": "number",
+              "format": "1"
+            },
+            "description": "type eh uma variavel para verificar se voce deseja estatistica: type 1: ultimas 5 horas, type 2: ultimos 5 dias, type 3: 5 mes"
+          }
+        ],
+        "summary": "Obter dados estatisticos sobre a umidade da planta",
+        "responses": {
+          "200": {
+            "description": "Lista de estatisticas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/statisticResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error 401 - Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "format": "int32",
+                      "example": 401
+                    },
+                    "mensagem": {
+                      "type": "string",
+                      "example": "No token provided"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error 500 - Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "format": "int32",
+                      "example": 500
+                    },
+                    "mensagem": {
+                      "type": "string",
+                      "example": "The server encountered an internal error while processing the request."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -616,6 +696,47 @@
           "password": {
             "type": "string",
             "description": "Senha do usuário a ser adicionada/atualizada"
+          }
+        }
+      },
+      "statisticResponse": {
+        "type": "object",
+        "properties": {
+          "temperature": {
+            "type": "object",
+            "properties": {
+              "mean": { "type": "string" },
+              "mode": { "type": "string" },
+              "median": { "type": "string" },
+              "standardDeviation": { "type": "string" },
+              "skewness": { "type": "string" },
+              "kurtosis": { "type": "string" }
+            }
+          },
+          "soilMoisture": {
+            "type": "object",
+            "properties": {
+              "mean": { "type": "string" },
+              "mode": { "type": "string" },
+              "median": { "type": "string" },
+              "standardDeviation": { "type": "string" },
+              "skewness": { "type": "string" },
+              "kurtosis": { "type": "string" }
+            }
+          },
+          "airMoisture": {
+            "type": "object",
+            "properties": {
+              "mean": { "type": "string" },
+              "mode": { "type": "string" },
+              "median": { "type": "string" },
+              "standardDeviation": { "type": "string" },
+              "skewness": { "type": "string" },
+              "kurtosis": { "type": "string" }
+            }
+          },
+          "date": {
+            "type": "string"
           }
         }
       }
