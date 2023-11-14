@@ -18,11 +18,8 @@ const infosRepository = {
       return { data: result };
     } catch (err) {
       console.error(err);
-      if (err.code === 11000) {
-        return { data: "Email already exists.", status: 409 };
-      } else {
-        return { data: err.message, status: 400 };
-      }
+      return { data: err.message, status: err.status };
+      
     }
   },
   delete: async (id) => {
