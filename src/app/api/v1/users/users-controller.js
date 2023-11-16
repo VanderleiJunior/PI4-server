@@ -4,7 +4,7 @@ const userController = {
   get: async (req, res) => {
     const userId = req.userId;
     const result = await userBusiness.find(userId);
-    return res.json(result).status(200);
+    return res.json(result.data).status(200);
   },
   post: async (req, res) => {
     const user = {
