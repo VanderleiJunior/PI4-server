@@ -1,4 +1,4 @@
-import userRepository from "./user-repository.js";
+import userRepository from "./users-repository.js";
 import validName from "../../../utils/validName.js";
 import validEmail from "../../../utils/validEmail.js";
 import validPassword from "../../../utils/validPassword.js";

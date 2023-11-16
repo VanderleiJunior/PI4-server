@@ -1,4 +1,4 @@
-import userBusiness from "./user-business.js";
+import userBusiness from "./users-business.js";
 
 const userController = {
   get: async (req, res) => {

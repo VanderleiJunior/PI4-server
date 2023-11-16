@@ -7,7 +7,7 @@ const appConfig = (app) => {
   connectToMongoDB();
   appMiddleware(app);
   consumer();
-  crons();
+  //crons();
 };
 
 export default appConfig;

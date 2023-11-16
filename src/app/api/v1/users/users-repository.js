@@ -1,4 +1,4 @@
-import { UserSchema } from "./user-schema.js";
+import { UserSchema } from "./users-schema.js";
 
 const userRepository = {
   get: async (userId) => {

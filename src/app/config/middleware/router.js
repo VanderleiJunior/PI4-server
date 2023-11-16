@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { userRouter, userRouterAuth } from "../../api/v1/user/user-router.js";
+import { userRouter, userRouterAuth } from "../../api/v1/users/users-router.js";
 import {
   infosRouter,
   infosRouterAuth,

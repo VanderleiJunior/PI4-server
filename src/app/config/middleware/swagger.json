@@ -25,7 +25,7 @@
       "description": "Operações com os dados recebidos do arduino"
     },
     {
-      "name": "user",
+      "name": "users",
       "description": "Operações com os dados dos usuários"
     },
     {
@@ -249,9 +249,9 @@
         }
       }
     },
-    "/user": {
+    "/users": {
       "get": {
-        "tags": ["user"],
+        "tags": ["users"],
         "security": [
           {
             "BearerAuth": []
@@ -314,7 +314,7 @@
         }
       },
       "post": {
-        "tags": ["user"],
+        "tags": ["users"],
         "summary": "Adicionar novo usuário",
         "requestBody": {
           "description": "Informações do usuário a serem adicionadas",
@@ -368,7 +368,7 @@
         }
       },
       "put": {
-        "tags": ["user"],
+        "tags": ["users"],
         "summary": "Atualizar informações do usuário existente",
         "security": [
           {
@@ -456,9 +456,9 @@
         }
       }
     },
-    "/user/auth": {
+    "/users/auth": {
       "post": {
-        "tags": ["user"],
+        "tags": ["users"],
         "summary": "Login User",
         "requestBody": {
           "description": "email and password",
