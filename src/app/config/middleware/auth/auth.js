@@ -1,7 +1,11 @@
 import token from "./token.js";
 
 const auth = async (req, res, next) => {
+
   const authHeader = req.headers.authorization;
+  console.log(req);
+
+  console.log(authHeader);
 
   if (!authHeader) {
     console.error("No token provided");
