@@ -5,11 +5,7 @@ import usersBusiness from "./users-business.js";
 const usersController = {
   get: async (req, res) => {
     const userId = req.userId;
-<<<<<<< HEAD
     const result = await usersBusiness.find(userId);
-=======
-    const result = await userBusiness.find(userId);
->>>>>>> d6e3a26876d02d11c039601cc4e86dd436e756ca
     return res.json(result.data).status(200);
   },
   post: async (req, res) => {
