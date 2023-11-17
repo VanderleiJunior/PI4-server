@@ -7,7 +7,6 @@ const infosRepository = {
       params.infosType.map((e) => infosType.push(e));
       infosType.push("date", "time");
 
-      console.log(infosType);
       const res = {
         data: await InfosSchema.find({
           equipmentSerialNumber: params.equipmentSerialNumber,
