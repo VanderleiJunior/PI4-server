@@ -1,6 +1,7 @@
 import token from "./token.js";
 
 const auth = async (req, res, next) => {
+
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
