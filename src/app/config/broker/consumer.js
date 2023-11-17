@@ -5,7 +5,7 @@ import axios from 'axios';
 const MQTT_BROKER = "eb74db825f97475fb842783f5553a247.s2.eu.hivemq.cloud";
 const MQTT_PORT = 8883;  // Port for secure MQTT (TLS/SSL)
 const MQTT_TOPIC = "your/topic";  // Atualize com o tópico desejado
-const API_ENDPOINT = "https://pi4-server-production.up.railway.app/api/v1/infos";  // Atualize com o endpoint da sua API
+const API_ENDPOINT = "https://pi-4-server.vercel.app/api/v1/infos";  // Atualize com o endpoint da sua API
 
 const consumer = () => {
     const client = mqtt.connect({
@@ -30,6 +30,7 @@ const consumer = () => {
 
         // Prepare data in the format expected by your API
         const data = {
+        equipmentSerialNumber: msgPayload.equipmentSerialNumber,    
         temperature: msgPayload.airTemperature,
         soilMoisture: msgPayload.soilHumidity,
         airMoisture: msgPayload.airHumidity,
