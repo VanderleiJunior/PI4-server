@@ -1,10 +1,12 @@
-import userBusiness from "./users-business.js";
+import equipmentsBusiness from "../equipments/equipments-business.js";
+import equipmentsController from "../equipments/equipments-controller.js";
+import usersBusiness from "./users-business.js";
 
-const userController = {
+const usersController = {
   get: async (req, res) => {
     const userId = req.userId;
-    const result = await userBusiness.find(userId);
-    return res.json(result).status(200);
+    const result = await usersBusiness.find(userId);
+    return res.json(result.data).status(200);
   },
   post: async (req, res) => {
     const user = {
@@ -17,7 +19,8 @@ const userController = {
       return res.status(400).send("Email, name and password is required");
     }
 
-    const result = await userBusiness.create(user);
+    const result = await usersBusiness.create(user);
+
     return res.status(result.status || 201).send(result.data);
   },
   auth: async (req, res) => {
@@ -32,7 +35,7 @@ const userController = {
       return res.status(400).send("Password is required");
     }
 
-    const result = await userBusiness.login(user);
+    const result = await usersBusiness.login(user);
     return res.status(result.status || 200).send(result.data);
   },
   put: async (req, res) => {
@@ -41,9 +44,9 @@ const userController = {
     }
     const user = { ...req.body.user, _id: req.userId };
 
-    const result = await userBusiness.put(user);
+    const result = await usersBusiness.put(user);
     return res.status(result.status || 200).send(result.data);
   },
 };
 
-export default userController;
+export default usersController;

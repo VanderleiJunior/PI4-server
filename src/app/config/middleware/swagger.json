@@ -29,8 +29,8 @@
       "description": "Operações com os dados dos usuários"
     },
     {
-      "name": "statistic",
-      "description": "Operações com os dados de estatistica"
+      "name": "equipments",
+      "description": "Operações com os equipamentos"
     }
   ],
   "paths": {
@@ -87,21 +87,29 @@
         "parameters": [
           {
             "in": "query",
-            "name": "inicialDate",
+            "name": "date",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "DD/MM/AAAA"
             },
-            "description": "Inicial date for filter"
+            "description": "Date for filter"
           },
           {
             "in": "query",
-            "name": "finalDate",
+            "name": "equipmentSerialNumber",
             "schema": {
-              "type": "string",
-              "format": "date-time"
+              "type": "number",
+              "format": 12312312
             },
-            "description": "Final date for filter"
+            "description": "SerialNumber do equipamento de irrigacao"
+          },
+          {
+            "in": "query",
+            "name": "infosType",
+            "schema": {
+              "type": "string"
+            },
+            "description": "qual tipo de Informacao deseja. ex: temperature, soilMoisture ou airMoisture"
           }
         ],
         "responses": {
@@ -523,25 +531,34 @@
         }
       }
     },
-    "/statistic": {
+    "infos/statistic": {
       "get": {
-        "tags": ["statistic"],
+        "tags": ["infos"],
         "security": [
           {
             "BearerAuth": []
           }
         ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "type",
-            "schema": {
-              "type": "number",
-              "format": "1"
-            },
-            "description": "type eh uma variavel para verificar se voce deseja estatistica: type 1: ultimas 5 horas, type 2: ultimos 5 dias, type 3: 5 mes"
-          }
-        ],
+        "requestBody": {
+          "description": "dados para calcular estatisticas",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "name": "data",
+                "type": "object",
+                "properties":{
+                  "data": {
+                    "type": "array",
+                    "items":{
+                      "type": "number"
+                    }
+                  }
+                }
+                }
+              }
+            }
+          },
         "summary": "Obter dados estatisticos sobre a umidade da planta",
         "responses": {
           "200": {
@@ -598,8 +615,207 @@
           }
         }
       }
-    }
-  },
+    },
+    "/equipments": {
+      "get": {
+        "tags": ["equipments"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Obter lista de equipamentos",
+        "responses": {
+          "200": {
+            "description": "Lista de equipamentos"
+              }
+            },
+          "401": {
+            "description": "Error 401 - Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "format": "int32",
+                      "example": 401
+                    },
+                    "mensagem": {
+                      "type": "string",
+                      "example": "No token provided"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error 500 - Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "format": "int32",
+                      "example": 500
+                    },
+                    "mensagem": {
+                      "type": "string",
+                      "example": "The server encountered an internal error while processing the request."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+      "post": {
+        "tags": ["equipments"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Vincular um novo equipamento ao usuario",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "serialNumber",
+            "schema": {
+              "type": "number",
+              "format": "00000000"
+            },
+            "required": true,
+            "description": "SerialNumber do equipamento de irrigacao"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "equipamento vinculado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },"401": {
+            "description": "Error 401 - Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "format": "int32",
+                      "example": 401
+                    },
+                    "mensagem": {
+                      "type": "string",
+                      "example": "No token provided"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error 500 - Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "format": "int32",
+                      "example": 500
+                    },
+                    "mensagem": {
+                      "type": "string",
+                      "example": "The server encountered an internal error while processing the request."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["equipments"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "deletar um equipamento do usuario",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "serialNumber",
+            "schema": {
+              "type": "number",
+              "format": "00000000"
+            },
+            "required": true,
+            "description": "SerialNumber do equipamento de irrigacao"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "equipamento deletado com sucesso"
+          },
+          "401": {
+            "description": "Error 401 - Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "format": "int32",
+                      "example": 401
+                    },
+                    "mensagem": {
+                      "type": "string",
+                      "example": "No token provided"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error 500 - Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "format": "int32",
+                      "example": 500
+                    },
+                    "mensagem": {
+                      "type": "string",
+                      "example": "The server encountered an internal error while processing the request."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }},
   "components": {
     "schemas": {
       "infosResponse": {
@@ -610,10 +826,15 @@
             "format": "uuid",
             "description": "UUID da leitura de dados"
           },
-          "date-time": {
+          "date": {
             "type": "string",
-            "format": "date-time",
-            "description": "Data e hora da leitura"
+            "format": "string",
+            "description": "Data da leitura"
+          },
+          "time": {
+            "type": "string",
+            "format": "string",
+            "description": "Hora da leitura"
           },
           "temperature": {
             "type": "number",
@@ -655,6 +876,12 @@
             "format": "float",
             "example": 10.5,
             "description": "Valor da umidade do ar em % a ser adicionado/atualizado"
+          },
+          "equipmentSerialNumber": {
+            "type": "number",
+            "format": "float",
+            "example": 121314115,
+            "description": "SerialNumber do equipamento de irrigacao"
           }
         }
       },
@@ -702,42 +929,12 @@
       "statisticResponse": {
         "type": "object",
         "properties": {
-          "temperature": {
-            "type": "object",
-            "properties": {
-              "mean": { "type": "string" },
-              "mode": { "type": "string" },
-              "median": { "type": "string" },
-              "standardDeviation": { "type": "string" },
-              "skewness": { "type": "string" },
-              "kurtosis": { "type": "string" }
-            }
-          },
-          "soilMoisture": {
-            "type": "object",
-            "properties": {
-              "mean": { "type": "string" },
-              "mode": { "type": "string" },
-              "median": { "type": "string" },
-              "standardDeviation": { "type": "string" },
-              "skewness": { "type": "string" },
-              "kurtosis": { "type": "string" }
-            }
-          },
-          "airMoisture": {
-            "type": "object",
-            "properties": {
-              "mean": { "type": "string" },
-              "mode": { "type": "string" },
-              "median": { "type": "string" },
-              "standardDeviation": { "type": "string" },
-              "skewness": { "type": "string" },
-              "kurtosis": { "type": "string" }
-            }
-          },
-          "date": {
-            "type": "string"
-          }
+          "mean": { "type": "string" },
+          "mode": { "type": "string" },
+          "median": { "type": "string" },
+          "standardDeviation": { "type": "string" },
+          "skewness": { "type": "string" },
+          "kurtosis": { "type": "string" }
         }
       }
     },
@@ -749,4 +946,5 @@
       }
     }
   }
+  
 }

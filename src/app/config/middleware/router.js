@@ -4,7 +4,7 @@ import {
   infosRouter,
   infosRouterAuth,
 } from "../../api/v1/infos/infos-router.js";
-import statisticsRouter from "../../api/v1/statistics/statistics-router.js";
+import equipmentsRouter from "../../api/v1/equipments/equipments-router.js";
 
 const router = Router();
 
@@ -16,6 +16,6 @@ router.use("/api/v1", infosRouterAuth);
 
 router.use("/api/v1", userRouterAuth);
 
-router.use("/api/v1", statisticsRouter);
+router.use("/api/v1", equipmentsRouter);
 
 export default router;

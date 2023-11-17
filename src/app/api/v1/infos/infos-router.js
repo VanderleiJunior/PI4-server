@@ -17,3 +17,7 @@ infosRouterAuth
 infosRouterAuth
   .route("/infos/:id")
   .delete((req, res) => infosController.delete(req, res));
+
+infosRouterAuth
+  .route("/infos/statistic")
+  .get((req, res) => infosController.statistic(req, res));

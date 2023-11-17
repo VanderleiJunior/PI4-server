@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-export const userSchema = new Schema(
+export const usersSchema = new Schema(
   {
     name: {
       type: String,
@@ -19,7 +19,11 @@ export const userSchema = new Schema(
     birthDate: {
       type: String,
     },
-
+    type: {
+      type: String,
+      required: true,
+      default: 'customer'
+    },
     address: {
       street: {
         type: String,
@@ -47,4 +51,4 @@ export const userSchema = new Schema(
   { timestamps: true }
 );
 
-export const UserSchema = mongoose.model("User", userSchema);
+export const UsersSchema = mongoose.model("Users", usersSchema);

@@ -13,8 +13,17 @@ export const infosSchema = new Schema(
       type: Number,
       required: true,
     },
-    systemOrigin: {
+    equipmentSerialNumber: {
+      type: Number,
+      required: true,
+    },
+    date: {
       type: String,
+      required: true,
+    },
+    time: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

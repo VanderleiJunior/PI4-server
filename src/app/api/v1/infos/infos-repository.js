@@ -1,10 +1,20 @@
 import { InfosSchema } from "./infos-schema.js";
 
 const infosRepository = {
-  find: async (size) => {
+  find: async (params) => {
     try {
+      const infosType = [];
+      params.infosType.map((e) => infosType.push(e));
+      infosType.push("date", "time");
+
+      console.log(infosType);
       const res = {
-        data: await InfosSchema.find().sort({ createdAt: -1 }).limit(size),
+        data: await InfosSchema.find({
+          equipmentSerialNumber: params.equipmentSerialNumber,
+          date: params.date,
+        })
+          .select(infosType)
+          .sort({ time: -1 }),
       };
       return res;
     } catch (err) {
@@ -19,7 +29,6 @@ const infosRepository = {
     } catch (err) {
       console.error(err);
       return { data: err.message, status: err.status };
-      
     }
   },
   delete: async (id) => {

@@ -1,9 +1,9 @@
-import { UserSchema } from "./users-schema.js";
+import { UsersSchema } from "./users-schema.js";
 
-const userRepository = {
+const usersRepository = {
   get: async (userId) => {
     try {
-      const res = await UserSchema.find({ _id: userId });
+      const res = await UsersSchema.find({ _id: userId });
       return { data: res };
     } catch (err) {
       console.error(err);
@@ -13,7 +13,7 @@ const userRepository = {
   },
   find: async (email) => {
     try {
-      const res = await UserSchema.findOne(email).select("password");
+      const res = await UsersSchema.findOne(email).select("password");
       if (res == null) {
         return { data: "email invalid", status: 404 };
       }
@@ -25,7 +25,7 @@ const userRepository = {
   },
   create: async (user) => {
     try {
-      const result = await UserSchema.create(user);
+      const result = await UsersSchema.create(user);
       return { data: result };
     } catch (err) {
       console.error(err);
@@ -38,7 +38,7 @@ const userRepository = {
   },
   update: async (user) => {
     try {
-      const result = await UserSchema.findByIdAndUpdate(user._id, { ...user });
+      const result = await UsersSchema.findByIdAndUpdate(user._id, { ...user });
       return { data: result };
     } catch (err) {
       console.error(err);
@@ -47,4 +47,4 @@ const userRepository = {
   },
 };
 
-export default userRepository;
+export default usersRepository;
