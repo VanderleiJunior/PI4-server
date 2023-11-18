@@ -1,6 +1,6 @@
 import mqtt from "mqtt";
 import axios from "axios";
-import infosBusiness from "../../api/v1/infos/infos-business";
+import infosBusiness from "../../api/v1/infos/infos-business.js";
 
 // HiveMQ Cloud Cluster settings
 const MQTT_BROKER = "eb74db825f97475fb842783f5553a247.s2.eu.hivemq.cloud";
