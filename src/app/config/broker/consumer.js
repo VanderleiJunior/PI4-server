@@ -1,5 +1,6 @@
 import mqtt from "mqtt";
 import axios from "axios";
+import infosBusiness from "../../api/v1/infos/infos-business";
 
 // HiveMQ Cloud Cluster settings
 const MQTT_BROKER = "eb74db825f97475fb842783f5553a247.s2.eu.hivemq.cloud";
@@ -22,7 +23,7 @@ const consumer = () => {
     client.subscribe(MQTT_TOPIC);
   });
 
-  client.on("message", (topic, message) => {
+  client.on("message", async (topic, message) => {
     console.log(`Received message: ${message.toString()} on topic ${topic}`);
     try {
       // Parse the received message payload
@@ -37,19 +38,23 @@ const consumer = () => {
       };
 
       // Send data to your API endpoint
-      axios
-        .post(API_ENDPOINT, data)
-        .then((response) => {
-          console.log(
-            `Data sent to API, response status code ${response.status}`
-          );
-        })
-        .catch((error) => {
-          console.error(`Error: ${error.message}`);
-          if (error.response) {
-            console.error("Response data:", error.response.data);
-          }
-        });
+
+      const postInfos = await infosBusiness(data);
+
+      console.log("response post infos", postInfos);
+      //   axios
+      //     .post(API_ENDPOINT, data)
+      //     .then((response) => {
+      //       console.log(
+      //         `Data sent to API, response status code ${response.status}`
+      //       );
+      //     })
+      //     .catch((error) => {
+      //       console.error(`Error: ${error.message}`);
+      //       if (error.response) {
+      //         console.error("Response data:", error.response.data);
+      //       }
+      //     });
     } catch (e) {
       console.error(`Error: ${e.message}`);
     }
