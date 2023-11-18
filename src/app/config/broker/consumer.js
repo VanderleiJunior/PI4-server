@@ -1,5 +1,6 @@
 import mqtt from "mqtt";
 import axios from "axios";
+import infosBusiness from "../../api/v1/infos/infos-business";
 
 // HiveMQ Cloud Cluster settings
 const MQTT_BROKER = "eb74db825f97475fb842783f5553a247.s2.eu.hivemq.cloud";
@@ -38,10 +39,8 @@ const consumer = () => {
 
       // Send data to your API endpoint
       try {
-        const response = await axios.post(API_ENDPOINT, data);
-        console.log(
-          `Data sent to API, response status code ${response.status}`
-        );
+        const response = await infosBusiness.create(data);
+        console.log(`Data sent to API, response status code ${response}`);
       } catch (error) {
         console.error(`Error: ${error.message}`);
         if (error.response) {
