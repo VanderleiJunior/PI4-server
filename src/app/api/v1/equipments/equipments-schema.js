@@ -3,8 +3,7 @@ import mongoose, { Schema } from "mongoose";
 export const equipmentsSchema = new Schema(
   {
     serialNumber: {
-      type: Number,
-      length: 8,
+      type: String,
     },
     userId: {
       type: String,
