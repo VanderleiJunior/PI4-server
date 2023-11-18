@@ -31,7 +31,7 @@ const equipmentsController = {
       return res.status(400).send("equipment SerialNumber is required");
     }
 
-    const result = await equipmentsBusiness.create(equipment);
+    const result = await equipmentsBusiness.delete(equipment);
     return res.status(result.status || 200).send(result.data);
   },
 };
