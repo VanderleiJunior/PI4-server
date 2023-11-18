@@ -49,6 +49,8 @@ const consumer = () => {
       }
     } catch (e) {
       console.error(`Error: ${e.message}`);
+    } finally {
+      client.end();
     }
   });
 };
