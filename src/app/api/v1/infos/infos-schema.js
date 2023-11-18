@@ -14,7 +14,7 @@ export const infosSchema = new Schema(
       required: true,
     },
     equipmentSerialNumber: {
-      type: Number,
+      type: String,
       required: true,
     },
     date: {
