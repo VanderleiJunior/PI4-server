@@ -98,8 +98,8 @@
             "in": "query",
             "name": "equipmentSerialNumber",
             "schema": {
-              "type": "number",
-              "format": 12312312
+              "type": "string",
+              "format": "24:0A:C4:00:01:10"
             },
             "description": "SerialNumber do equipamento de irrigacao"
           },
@@ -686,8 +686,8 @@
             "in": "query",
             "name": "serialNumber",
             "schema": {
-              "type": "number",
-              "format": "00000000"
+              "type": "string",
+              "format": "24:0A:C4:00:01:10"
             },
             "required": true,
             "description": "SerialNumber do equipamento de irrigacao"
@@ -760,8 +760,8 @@
             "in": "query",
             "name": "serialNumber",
             "schema": {
-              "type": "number",
-              "format": "00000000"
+              "type": "string",
+              "format": "24:0A:C4:00:01:10"
             },
             "required": true,
             "description": "SerialNumber do equipamento de irrigacao"
