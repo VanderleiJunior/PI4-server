@@ -32,8 +32,8 @@ const consumer = () => {
       const data = {
         equipmentSerialNumber: msgPayload.equipmentSerialNumber,
         temperature: msgPayload.airTemperature,
-        soilMoisture: msgPayload.soilMoisture,
-        airMoisture: msgPayload.airMoisture,
+        soilMoisture: msgPayload.soilHumidity,
+        airMoisture: msgPayload.airHumidity,
       };
 
       // Send data to your API endpoint
