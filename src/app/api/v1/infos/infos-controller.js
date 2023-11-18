@@ -11,8 +11,6 @@ const infosController = {
         : ["temperature", "soilMoisture", "airMoisture"],
     };
 
-    console.log(params.infosType);
-
     if (!params.equipmentSerialNumber) {
       return res.status(400).send("equipment SerialNumber is required");
     }
