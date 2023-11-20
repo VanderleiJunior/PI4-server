@@ -39,8 +39,10 @@ const consumer = () => {
 
       // Send data to your API endpoint
       try {
-        const response = await infosBusiness.create(data);
-        console.log(`Data sent to API, response status code ${response}`);
+        const response = await axios.post(API_ENDPOINT, data);
+        console.log(
+          `Data sent to API, response status code ${response.status}`
+        );
       } catch (error) {
         console.error(`Error: ${error.message}`);
         if (error.response) {
