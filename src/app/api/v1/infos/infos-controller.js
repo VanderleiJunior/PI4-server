@@ -5,18 +5,16 @@ const infosController = {
   get: async (req, res) => {
     const params = {
       equipmentSerialNumber: req.query.equipmentSerialNumber,
-      date: req.query.date,
+      initDate: req.query.initDate,
+      lastDate: req.query.lastDate,
+      filter: req.query.filter,
       infosType: req.query.infosType
         ? [req.query.infosType]
         : ["temperature", "soilMoisture", "airMoisture"],
     };
 
-    if (!params.equipmentSerialNumber) {
-      return res.status(400).send("equipment SerialNumber is required");
-    }
-
     const result = await infosBusiness.find(params);
-    return res.json(result).status(200);
+    return res.send(result.data).status(result.status || 200);
   },
   post: async (req, res) => {
     const infos = {
@@ -53,7 +51,7 @@ const infosController = {
     }
   },
   statistic: async (req, res) => {
-    const data = req.body.data;
+    const date = req.date.data;
 
     if (!data) {
       return res.status(400).send("data array is required");

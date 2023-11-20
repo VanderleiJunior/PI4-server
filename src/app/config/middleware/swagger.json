@@ -87,12 +87,29 @@
         "parameters": [
           {
             "in": "query",
-            "name": "date",
+            "name": "lastDate",
             "schema": {
               "type": "string",
               "format": "DD/MM/AAAA"
             },
-            "description": "Date for filter"
+            "description": "Date for end of filter"
+          },{
+            "in": "query",
+            "name": "initDate",
+            "schema": {
+              "type": "string",
+              "format": "DD/MM/AAAA"
+            },
+            "description": "Date for init of filter"
+          },
+          {
+            "in": "query",
+            "name": "filter",
+            "schema": {
+              "type": "string",
+              "format": "day || hours"
+            },
+            "description": "type of filter. if day, he will return the data between the dates else if hours, will return last five hours"
           },
           {
             "in": "query",

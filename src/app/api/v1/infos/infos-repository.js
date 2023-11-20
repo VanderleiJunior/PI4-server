@@ -10,10 +10,11 @@ const infosRepository = {
       const res = {
         data: await InfosSchema.find({
           equipmentSerialNumber: params.equipmentSerialNumber,
-          date: params.date,
+          date: { $gte: params.initDate, $lte: params.lastDate },
         })
           .select(infosType)
-          .sort({ time: -1 }),
+          .sort({ date: -1, time: -1 })
+          .limit(params.filter == "hours" ? 5 : null),
       };
       return res;
     } catch (err) {
