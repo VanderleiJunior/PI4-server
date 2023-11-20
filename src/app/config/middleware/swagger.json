@@ -549,11 +549,31 @@
       }
     },
     "infos/statistic": {
-      "get": {
+      "post": {
         "tags": ["infos"],
         "security": [
           {
             "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "filter",
+            "schema": {
+              "type": "string",
+              "format": "day || hours"
+            },
+            "description": "type of filter. if day, he will return the data between the dates else if hours, will return last five hours"
+          },
+          {
+            "in": "query",
+            "name": "equipmentSerialNumber",
+            "schema": {
+              "type": "string",
+              "format": "24:0A:C4:00:01:10"
+            },
+            "description": "SerialNumber do equipamento de irrigacao"
           }
         ],
         "requestBody": {
@@ -562,13 +582,15 @@
           "content": {
             "application/json": {
               "schema": {
-                "name": "data",
+                "name": "dates",
                 "type": "object",
                 "properties":{
                   "data": {
                     "type": "array",
                     "items":{
-                      "type": "number"
+                      "type": "string",
+                      "format": "DD/MM/AAAA",
+                      "example": "12/04/2023"
                     }
                   }
                 }

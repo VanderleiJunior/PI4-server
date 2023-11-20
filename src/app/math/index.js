@@ -6,6 +6,9 @@ import calculateSkewness from "./skewness.js";
 import calculateKurtosis from "./kurtosis.js";
 
 function calculateStatistics(dataArray) {
+  if (!(dataArray.length > 0)) {
+    return {};
+  }
   const mean = calculateMean(dataArray);
 
   const mode = calculateMode(dataArray);

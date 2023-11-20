@@ -20,4 +20,4 @@ infosRouterAuth
 
 infosRouterAuth
   .route("/infos/statistic")
-  .get((req, res) => infosController.statistic(req, res));
+  .post((req, res) => infosController.statistic(req, res));

@@ -51,15 +51,18 @@ const infosController = {
     }
   },
   statistic: async (req, res) => {
-    const date = req.date.data;
+    const params = {
+      equipmentSerialNumber: req.query.equipmentSerialNumber,
+      filter: req.query.filter,
+      infosType: req.query.infosType
+        ? [req.query.infosType]
+        : ["temperature", "soilMoisture", "airMoisture"],
+      dates: req.body.dates,
+    };
 
-    if (!data) {
-      return res.status(400).send("data array is required");
-    }
+    const response = await infosBusiness.statistic(params);
 
-    const response = calculateStatistics(data);
-
-    return res.status(200).send(response);
+    return res.status(response.status || 200).send(response.data);
   },
 };
 
