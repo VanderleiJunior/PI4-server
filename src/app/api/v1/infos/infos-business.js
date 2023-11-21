@@ -148,7 +148,7 @@ const infosBusiness = {
       if (err.status) {
         return err;
       }
-      return { data: [{ ...data }] };
+      return { data: data };
     }
   },
 };
