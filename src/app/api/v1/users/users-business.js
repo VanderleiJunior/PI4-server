@@ -56,10 +56,13 @@ const usersBusiness = {
   },
   put: async (user) => {
     if (user.name && !validName(user.name)) {
+      console.log("Name invalid");
       return { data: "Name invalid", status: 400 };
     } else if (user.email && !validEmail(user.email)) {
+      console.log("Email invalid");
       return { data: "Email invalid", status: 400 };
     } else if (user.password && !validPassword(user.password)) {
+      console.log("Password invalid");
       return { data: "Password invalid", status: 400 };
     }
 

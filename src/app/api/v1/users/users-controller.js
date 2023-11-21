@@ -40,6 +40,7 @@ const usersController = {
   },
   put: async (req, res) => {
     if (!req.body.user) {
+      console.log("req empty");
       return res.status(400).send("req empty");
     }
     const user = { ...req.body.user, _id: req.userId };
