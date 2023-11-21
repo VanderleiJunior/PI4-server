@@ -72,6 +72,13 @@ const usersBusiness = {
     user.address ? (upUser.address = user.address) : null;
     upUser._id = user._id;
 
+    if (user.serialNumber && !result.status) {
+      await equipmentsBusiness.create({
+        userId: res.data._id,
+        serialNumber: user.serialNumber,
+      });
+    }
+
     const res = await usersRepository.update(upUser);
     if (!res.status) {
       return { data: { ...res.data._doc, ...upUser } };
