@@ -79,6 +79,12 @@ const infosBusiness = {
         data: null,
         status: null,
       };
+      const dataOfAll = {
+        temperature: [],
+        soilMoisture: [],
+        airMoisture: [],
+        date: "all",
+      };
       const data = [];
       for (let date of params.dates) {
         const dataDay = {
@@ -103,6 +109,9 @@ const infosBusiness = {
           dataDay.temperature.push(e.temperature);
           dataDay.airMoisture.push(e.airMoisture);
           dataDay.soilMoisture.push(e.soilMoisture);
+          dataOfAll.temperature.push(e.temperature);
+          dataOfAll.airMoisture.push(e.airMoisture);
+          dataOfAll.soilMoisture.push(e.soilMoisture);
         });
 
         dataDay.temperature = calculateStatistics(dataDay.temperature);
@@ -112,6 +121,12 @@ const infosBusiness = {
 
         data.push(dataDay);
       }
+
+      dataOfAll.temperature = calculateStatistics(dataOfAll.temperature);
+      dataOfAll.airMoisture = calculateStatistics(dataOfAll.airMoisture);
+      dataOfAll.soilMoisture = calculateStatistics(dataOfAll.soilMoisture);
+
+      data.push(dataOfAll);
 
       if (err.status) {
         return err;
