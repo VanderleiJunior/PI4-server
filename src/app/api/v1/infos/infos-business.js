@@ -1,4 +1,5 @@
 import calculateStatistics from "../../../math/index.js";
+import calculateHydrationProbability from "../../../math/probabilities.js";
 import infosRepository from "./infos-repository.js";
 
 const infosBusiness = {
@@ -61,9 +62,16 @@ const infosBusiness = {
         temperature: [],
         soilMoisture: [],
         airMoisture: [],
+        hydrationProbability: null,
         date: "last 5 hours",
       };
-      response.data.map((e) => {
+      response.data.map((e, i) => {
+        if (i == 0) {
+          data.hydrationProbability = calculateHydrationProbability(
+            e.soilMoisture,
+            e.temperature
+          );
+        }
         data.temperature.push(e.temperature);
         data.airMoisture.push(e.airMoisture);
         data.soilMoisture.push(e.soilMoisture);
@@ -91,6 +99,7 @@ const infosBusiness = {
           temperature: [],
           soilMoisture: [],
           airMoisture: [],
+          hydrationProbability: null,
           date: null,
         };
         const response = await infosBusiness.find({
@@ -117,6 +126,10 @@ const infosBusiness = {
         dataDay.temperature = calculateStatistics(dataDay.temperature);
         dataDay.airMoisture = calculateStatistics(dataDay.airMoisture);
         dataDay.soilMoisture = calculateStatistics(dataDay.soilMoisture);
+        dataDay.hydrationProbability = calculateHydrationProbability(
+          dataDay.soilMoisture.mean,
+          dataDay.temperature.mean
+        );
         dataDay.date = date;
 
         data.push(dataDay);
@@ -125,6 +138,10 @@ const infosBusiness = {
       dataOfAll.temperature = calculateStatistics(dataOfAll.temperature);
       dataOfAll.airMoisture = calculateStatistics(dataOfAll.airMoisture);
       dataOfAll.soilMoisture = calculateStatistics(dataOfAll.soilMoisture);
+      dataOfAll.hydrationProbability = calculateHydrationProbability(
+        dataOfAll.soilMoisture.mean,
+        dataOfAll.temperature.mean
+      );
 
       data.push(dataOfAll);
 

@@ -2,7 +2,7 @@ import infosRepository from "../api/v1/infos/infos-repository.js";
 import { getWeather } from "./api.js";
 
 const setWeather = async () => {
-  //const { data } = await getWeather();
+  const { data } = await getWeather();
   const weather = {
     temperature: data.main.temp,
     airMoisture: data.main.humidity,
