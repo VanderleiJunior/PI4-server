@@ -23,12 +23,12 @@ function calculateStatistics(dataArray) {
   // You can add calculations for Probabilities, Regression, and Statistical Inference here, depending on your specific requirements.
 
   return {
-    mean,
+    mean: mean.toFixed(2),
     mode,
-    median,
-    standardDeviation,
-    skewness,
-    kurtosis,
+    median: median.toFixed(2),
+    standardDeviation: standardDeviation.toFixed(3),
+    skewness: skewness.toFixed(3),
+    kurtosis: skewness.toFixed(3),
   };
 }
 

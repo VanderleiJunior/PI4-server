@@ -4,21 +4,22 @@ function calculateMode(dataArray) {
   let modes = [];
 
   dataArray.forEach((value) => {
-    if (countMap.has(value)) {
-      countMap.set(value, countMap.get(value) + 1);
+    const fixValue = value.toFixed(2);
+    if (countMap.has(fixValue)) {
+      countMap.set(fixValue, countMap.get(fixValue) + 1);
     } else {
-      countMap.set(value, 1);
+      countMap.set(fixValue, 1);
     }
 
-    if (countMap.get(value) > maxCount) {
-      maxCount = countMap.get(value);
-      modes = [value];
-    } else if (countMap.get(value) === maxCount) {
-      modes.push(value);
+    if (countMap.get(fixValue) > maxCount) {
+      maxCount = countMap.get(fixValue);
+      modes = [fixValue];
+    } else if (countMap.get(fixValue) === maxCount) {
+      modes.push(fixValue);
     }
   });
 
-  return modes;
+  return modes.length > 2 ? "n/a" : modes;
 }
 
 export default calculateMode;

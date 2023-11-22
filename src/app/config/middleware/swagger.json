@@ -585,7 +585,7 @@
                 "name": "dates",
                 "type": "object",
                 "properties":{
-                  "data": {
+                  "dates": {
                     "type": "array",
                     "items":{
                       "type": "string",
